@@ -11,7 +11,7 @@ public class Answer28 extends Benchmark{
 	private static long divisor = 1;
 
 
-	private static void divideOne(long dividend, long divisor) {
+	public static int divideOne(long dividend, long divisor) {
 
 		int quotient = 0;
 
@@ -20,9 +20,10 @@ public class Answer28 extends Benchmark{
 			quotient++;
 		}
 		System.out.println("(divideOne): Answer: " + quotient);
+		return quotient;
 	}
 
-	private static void divideTwo(long dividend, long divisor) {
+	public static int divideTwo(long dividend, long divisor) {
 
 		int quotient = 0;
 
@@ -35,6 +36,14 @@ public class Answer28 extends Benchmark{
 		quotient++;
 
 		System.out.println("(divideTwo): Answer: " + quotient);
+		return quotient;
+	}
+
+	public static void divideThree(long dividend, long divisor)
+	{
+
+
+		System.out.println("(divideThree): Answer: " );
 	}
 
 	public void timeDivideOne(int repeats)
@@ -61,6 +70,8 @@ public class Answer28 extends Benchmark{
 		System.out.println("Enter divisor:");
 		divisor = 17;//scanner.nextLong();
 
-		CaliperMain.main(Answer28.class, new String[]{"-i","micro"});
+		//CaliperMain.main(Answer28.class, new String[]{"-i","micro"});
+	  	divideThree(dividend,divisor);
+
 	}
 }
