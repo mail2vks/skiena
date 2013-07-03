@@ -11,39 +11,54 @@ public class Answer28 extends Benchmark{
 	private static long divisor = 1;
 
 
-	public static int divideOne(long dividend, long divisor) {
+	public static long divideOne(long dividend, long divisor) {
 
-		int quotient = 0;
+		long quotient = 0;
 
-		while (dividend > divisor) {
+		if(dividend <= 0 || divisor <= 0 || dividend < divisor)
+			return 0;
+
+		while (dividend >= divisor) {
 			dividend -= divisor;
 			quotient++;
 		}
 		System.out.println("(divideOne): Answer: " + quotient);
 		return quotient;
 	}
+	//http://www.dragonwins.com/domains/getteched/de248/binary_division.htm
+	public static long divideTwo(long dividend, long divisor) {
 
-	public static int divideTwo(long dividend, long divisor) {
+		long quotient = 0;
 
-		int quotient = 0;
+		if(dividend <= 0 || divisor <= 0 || dividend < divisor)
+			return 0;
 
-		while (dividend > divisor * 2) {
-			dividend -= 2 * divisor;
-			quotient += 2;
+		// term * divisor should be close to dividend
+		long term = 1;
+		//System.out.println(dividend + " " + divisor + " " + term + " " + quotient);
+
+		while((term < Math.pow(2,64 - 1)) && (divisor < dividend))
+		{
+			divisor =  divisor << 1;
+			term = term << 1;
+			//System.out.println(dividend + " " + divisor + " " + term + " " + quotient);
 		}
 
-		dividend -= divisor;
-		quotient++;
+		while(term >= 1)
+		{
+			if(divisor <= dividend)
+			{
+				//System.out.println(dividend + " " + divisor + " " + term + " " + quotient);
+				quotient += term;
+				dividend = dividend - divisor;
+			}
+			//System.out.println(dividend + " " + divisor + " " + term + " " + quotient);
+			divisor = divisor >> 1;
+			term = term >> 1;
+		}
 
 		System.out.println("(divideTwo): Answer: " + quotient);
 		return quotient;
-	}
-
-	public static void divideThree(long dividend, long divisor)
-	{
-
-
-		System.out.println("(divideThree): Answer: " );
 	}
 
 	public void timeDivideOne(int repeats)
@@ -62,16 +77,14 @@ public class Answer28 extends Benchmark{
 		}
 	}
 
-	public static void main(String args[]){
+	public static void getCaliperBenchMarking(){
 
-		Scanner scanner = new Scanner(System.in);
-		System.out.println("Enter dividend:");
+		//System.out.println("Enter dividend:");
 		dividend = 23344555;//scanner.nextLong();
-		System.out.println("Enter divisor:");
+		//System.out.println("Enter divisor:");
 		divisor = 17;//scanner.nextLong();
 
-		//CaliperMain.main(Answer28.class, new String[]{"-i","micro"});
-	  	divideThree(dividend,divisor);
+		CaliperMain.main(Answer28.class, new String[]{"-i","micro"});
 
 	}
 }
